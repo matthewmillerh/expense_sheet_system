@@ -6,6 +6,9 @@ class User {
     BigDecimal startingBalance
     Boolean isFirstTime
 
+    // One-to-many relationship with Expense
+    static hasMany = [expenses: Expense]
+
     // Database mapping for the User class
     static mapping = {
         table 'app_user'
