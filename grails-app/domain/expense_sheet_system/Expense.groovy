@@ -10,6 +10,10 @@ class Expense {
     Date date
     User user
 
+    // Transient property for running balance calculation
+    BigDecimal runningBalance
+    static transients = ['runningBalance']
+
     // Many-to-one relationship with User - each expense belongs to one user
     static belongsTo = [user: User]
 
