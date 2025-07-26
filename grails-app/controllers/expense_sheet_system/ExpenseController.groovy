@@ -8,12 +8,16 @@ class ExpenseController {
     static scaffold = Expense
     
     /**
-     * Ensure user is logged in before accessing any expense-related actions
+     * List expenses for the current logged-in user, redirecting to login if not authenticated.
      */
-    def beforeInterceptor = {
+    def index() {
         if (!session.userId) {
             redirect(controller: "login", action: "index")
-            return false
+            return
         }
+        
+        def user = User.get(session.userId)
+        def expenses = Expense.findAllByUser(user)
+        respond expenses
     }
 }
