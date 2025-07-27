@@ -10,9 +10,10 @@ class Expense {
     Date date
     User user
 
-    // Transient property for running balance calculation
+    // Transient properties for running balance calculation and USD conversion
     BigDecimal runningBalance
-    static transients = ['runningBalance']
+    BigDecimal usdAmount
+    static transients = ['runningBalance', 'usdAmount']
 
     // Many-to-one relationship with User - each expense belongs to one user
     static belongsTo = [user: User]

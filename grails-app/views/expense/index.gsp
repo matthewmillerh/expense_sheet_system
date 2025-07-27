@@ -23,7 +23,19 @@
                     <g:if test="${flash.message}">
                         <div class="message" role="status">${flash.message}</div>
                     </g:if>
-                    <f:table collection="${expenseList}" properties="['description', 'amount', 'date', 'runningBalance']" />
+
+                    <g:if test="${expenseList.empty}">
+                        <div class="message" role="status">
+                            <g:message code="default.no.expenses.message" default="No expenses recorded yet." />
+                        </div>
+                    </g:if>
+                    <g:else>
+                        <f:table 
+                            collection="${expenseList}" 
+                            properties="['description', 'amount', 'date', 'runningBalance', 'usdAmount']" 
+                            labels="['Description', 'Amount (ZAR)', 'Date', 'Running Balance (ZAR)', 'Amount (USD)']"
+                        />
+                    </g:else>
 
                     <g:if test="${expenseCount > params.int('max')}">
                     <div class="pagination">
