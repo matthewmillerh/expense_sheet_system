@@ -13,6 +13,11 @@ class CurrencyConversionService {
     GrailsApplication grailsApplication
 
     private static final String FIXER_BASE_URL = "http://data.fixer.io/api"
+
+    // --- Caching fields ---
+    private static BigDecimal cachedRate = null
+    private static Date lastFetch = null
+    private static final long CACHE_DURATION_MS = 4 * 60 * 60 * 1000 // 4 hours
     
     /**
      * Convert ZAR amount to USD using current exchange rates from Fixer.io
@@ -42,6 +47,12 @@ class CurrencyConversionService {
      * @return The exchange rate (ZAR per 1 USD), or null if request fails
      */
     private BigDecimal getZarToUsdRate() {
+        // Use cached rate if it's valid
+        if (cachedRate && lastFetch && (new Date().time - lastFetch.time) < CACHE_DURATION_MS) {
+            return cachedRate
+        }
+
+        // Fetch new rate from Fixer.io
         try {
             String url = "${FIXER_BASE_URL}/latest?access_key=${getFixerApiKey()}&symbols=ZAR,USD"
             String response = new URL(url).text
@@ -53,7 +64,10 @@ class CurrencyConversionService {
                 def eurToUsd = jsonResponse.rates.USD
                 if (eurToZar && eurToUsd) {
                     // ZAR to USD = (EUR to USD) / (EUR to ZAR)
-                    return (eurToUsd / eurToZar).setScale(4, BigDecimal.ROUND_HALF_UP)
+                    // Calculate and cache the rate to avoid frequent API calls
+                    cachedRate = (eurToUsd / eurToZar).setScale(4, BigDecimal.ROUND_HALF_UP)
+                    lastFetch = new Date()
+                    return cachedRate
                 }
             } else {
                 log.error("Fixer.io API error: ${jsonResponse.error?.toString() ?: "Unknown error"}")
