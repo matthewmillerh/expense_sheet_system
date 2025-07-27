@@ -57,6 +57,16 @@
                 Welcome to the Expense Sheet System! Use this application to track your expenses, view your expense history, and export your data to CSV. 
             </p>
 
+            <%-- Show user balances --%>
+            <div class="mx-auto d-block w-100">
+                <h2 class="text-center"><strong>Your Balances</strong></h2>
+                <div class="text-center">
+                    <p>Starting Balance: <strong>R<g:formatNumber number="${startingBalance ?: 0}" type="number" minFractionDigits="2" maxFractionDigits="2"/></strong></p>
+                    <p>Current Balance: <strong>R<g:formatNumber number="${currentBalance ?: 0}" type="number" minFractionDigits="2" maxFractionDigits="2"/></strong></p>
+                </div>
+            </div>
+
+            <%-- Quick actions for authenticated users --%>
             <div id="controllers" role="navigation" class="mx-auto">
                 <h2 class="text-center">Quick Actions:</h2>
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
