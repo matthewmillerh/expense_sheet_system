@@ -51,23 +51,24 @@
 <div id="content" role="main">
     <div class="container">
         <section class="row colset-2-its">
-            <h1>Welcome to Grails</h1>
+            <h1>Expense Sheet System Home</h1>
 
-            <p>
-                Congratulations, you have successfully started your first Grails application! At the moment
-                this is the default page, feel free to modify it to either redirect to a controller or display
-                whatever content you may choose. Below is a list of controllers that are currently deployed in
-                this application, click on each to execute its default action:
+            <p class="text-center mx-auto">
+                Welcome to the Expense Sheet System! Use this application to track your expenses, view your expense history, and export your data to CSV. 
             </p>
 
-            <div id="controllers" role="navigation">
-                <h2>Available Controllers:</h2>
-                <ul>
-                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                        <li class="controller">
-                            <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
-                        </li>
-                    </g:each>
+            <div id="controllers" role="navigation" class="mx-auto">
+                <h2 class="text-center">Quick Actions:</h2>
+                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                    <li class="controller list-inline-item">
+                        <g:link controller="expense" action="create" class="text-white"><button class="btn btn-secondary text-white">Add Expense</button></g:link>
+                    </li>
+                    <li class="controller list-inline-item">
+                        <g:link controller="expense" action="index" class="text-white"><button class="btn btn-secondary text-white">View Expenses</button></g:link>
+                    </li>
+                    <li class="controller list-inline-item">
+                        <g:link controller="user" action="index" class="text-white"><button class="btn btn-secondary text-white">View Account</button></g:link>
+                    </li>
                 </ul>
             </div>
         </section>

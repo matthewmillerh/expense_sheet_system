@@ -11,3 +11,11 @@
     <br/>
     <g:submitButton name="save" value="Save and Continue"/>
 </g:form>
+<script>
+// Force a reload of the page if it was loaded from the cache
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+</script>

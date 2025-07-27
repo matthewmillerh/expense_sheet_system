@@ -30,11 +30,11 @@ class LoginController {
         // Store user in session for subsequent requests
         session.userId = user.id
         
-        // Redirect to balance setup if not configured, otherwise to main expense page
+        // Redirect to balance setup if not configured, otherwise to home page
         if (!user.startingBalance) {
             redirect(action: "setupBalance")
         } else {
-            redirect(controller: "expense", action: "index")
+            redirect(uri: "/")
         }
     }
 
@@ -42,7 +42,24 @@ class LoginController {
      * Display the starting balance setup form
      */
     def setupBalance() {
+        // Ensure the user is logged in
+        if (!session.userId) {
+            redirect(controller: 'login', action: 'index')
+            return
+        }
+
+        // Retrieve the current user for balance setup
         def user = User.get(session.userId)
+
+        // Add cache-control headers to prevent browser caching
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        response.setHeader("Pragma", "no-cache")
+
+        // Redirect to home page if user already has a starting balance
+        if (user.startingBalance) {
+            redirect(uri: "/")
+            return
+        }
         [user: user]
     }
 
@@ -52,10 +69,16 @@ class LoginController {
     @Transactional
     def saveBalance() {
         def user = User.get(session.userId)
+        // Prevent setting balance again if already set
+        if (user.startingBalance) {
+            redirect(uri: "/")
+            return
+        }
+
         user.startingBalance = params.startingBalance as BigDecimal
         
         if (user.save(flush: true)) {
-            redirect(controller: "expense", action: "index")
+            redirect(uri: "/")
         } else {
             // Display validation error if starting balance is invalid (e.g., <= 0)
             flash.message = "Starting balance must be greater than 0"
