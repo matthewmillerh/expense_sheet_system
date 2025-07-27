@@ -47,6 +47,10 @@ class ExpenseController {
             return
         }
 
+        // Always set the user to the logged-in user
+        def user = User.get(session.userId)
+        expense.user = user
+
         try {
             expenseService.save(expense)
         } catch (ValidationException e) {
@@ -72,6 +76,10 @@ class ExpenseController {
             notFound()
             return
         }
+
+        // Always set the user to the logged-in user
+        def user = User.get(session.userId)
+        expense.user = user
 
         try {
             expenseService.save(expense)

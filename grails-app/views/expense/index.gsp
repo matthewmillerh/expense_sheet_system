@@ -40,7 +40,13 @@
                         <f:table 
                             collection="${expenseList}" 
                             properties="['description', 'amount', 'usdAmount', 'date', 'runningBalance']" 
-                            labels="['Description', 'Amount (ZAR)', 'Amount (USD)', 'Date', 'Running Balance (ZAR)']"
+                            labels="[
+                                description: 'Description',
+                                amount: 'Amount (ZAR)',
+                                usdAmount: 'Amount (USD)',
+                                date: 'Date',
+                                runningBalance: 'Running Balance (ZAR)'
+                            ]"
                         />
                     </g:else>
 
