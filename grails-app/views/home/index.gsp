@@ -69,15 +69,18 @@
             <%-- Quick actions for authenticated users --%>
             <div id="controllers" role="navigation" class="mx-auto">
                 <h2 class="text-center">Quick Actions:</h2>
-                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
-                    <li class="controller list-inline-item">
+                <ul class="list-unstyled d-flex flex-wrap justify-content-center align-items-center">
+                    <li class="controller list-inline-item mb-2 mx-2">
                         <g:link controller="expense" action="create" class="text-white"><button class="btn btn-secondary text-white">Add Expense</button></g:link>
                     </li>
-                    <li class="controller list-inline-item">
+                    <li class="controller list-inline-item mb-2 mx-2">
                         <g:link controller="expense" action="index" class="text-white"><button class="btn btn-secondary text-white">View Expenses</button></g:link>
                     </li>
-                    <li class="controller list-inline-item">
+                    <li class="controller list-inline-item mb-2 mx-2">
                         <g:link controller="user" action="index" class="text-white"><button class="btn btn-secondary text-white">View Account</button></g:link>
+                    </li>
+                    <li class="controller list-inline-item mb-2 mx-2">
+                        <g:link controller="login" action="logout" class="text-white"><button class="btn btn-secondary text-white">Log Out</button></g:link>
                     </li>
                 </ul>
             </div>
