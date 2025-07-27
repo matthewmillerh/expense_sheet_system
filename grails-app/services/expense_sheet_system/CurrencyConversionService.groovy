@@ -46,7 +46,7 @@ class CurrencyConversionService {
      * 
      * @return The exchange rate (ZAR per 1 USD), or null if request fails
      */
-    private BigDecimal getZarToUsdRate() {
+    protected BigDecimal getZarToUsdRate() {
         // Use cached rate if it's valid
         if (cachedRate && lastFetch && (new Date().time - lastFetch.time) < CACHE_DURATION_MS) {
             return cachedRate
