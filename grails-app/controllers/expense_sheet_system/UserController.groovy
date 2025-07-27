@@ -3,15 +3,33 @@ package expense_sheet_system
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
+/**
+ * Controller for managing User entities in the expense sheet system.
+ * 
+ */
 class UserController {
 
     UserService userService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    /**
+     * Only show the current user in the index view.
+     * This is to ensure that users can only see their own information.
+     */
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond userService.list(params), model:[userCount: userService.count()]
+        // Ensure the user is logged in
+        def currentUserId = session.userId
+        if (!currentUserId) {
+            redirect(controller: 'login', action: 'index')
+            return
+        }
+        
+        // Retrieve the current user and prepare a list for display
+        def currentUser = User.get(currentUserId)
+        def userList = currentUser ? [currentUser] : []
+        
+        respond userList, model:[userCount: userList.size()]
     }
 
     def show(Long id) {

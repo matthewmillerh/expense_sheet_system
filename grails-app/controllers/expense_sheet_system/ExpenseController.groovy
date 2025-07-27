@@ -18,7 +18,7 @@ class ExpenseController {
     /**
      * List expenses for the logged-in user with running balance calculation
      */
-    def index() {
+    def index(Integer max) {
         def user = User.get(session.userId)
         def expenses = Expense.findAllByUser(user, [sort: 'date', order: 'asc'])
 
