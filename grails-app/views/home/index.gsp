@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
+    <title>Expense Sheet System</title>
 </head>
 <body>
 <content tag="nav">

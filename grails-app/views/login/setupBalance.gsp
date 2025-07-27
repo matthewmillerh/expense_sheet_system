@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Setup Balance - Expense Tracker</title>
+    <title>Expense Sheet System - Setup Balance</title>
 </head>
 <body>
 

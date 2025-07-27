@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Login - Expense Tracker</title>
+    <title>Expense Sheet System - Login</title>
 </head>
 <body>
 
