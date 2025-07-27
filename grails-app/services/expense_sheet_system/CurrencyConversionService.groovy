@@ -1,11 +1,76 @@
 package expense_sheet_system
 
-import groovy.transform.CompileStatic
+import grails.converters.JSON
+import groovy.json.JsonSlurper
+import grails.core.GrailsApplication
 
-@CompileStatic
+/**
+ * Service for currency conversion operations.
+ * Supports ZAR to USD conversion using Fixer.io API.
+ */
 class CurrencyConversionService {
 
-    def doSomething() {
+    GrailsApplication grailsApplication
 
+    private static final String FIXER_BASE_URL = "http://data.fixer.io/api"
+    
+    /**
+     * Convert ZAR amount to USD using current exchange rates from Fixer.io
+     * 
+     * @param zarAmount The amount in ZAR to convert
+     * @return The equivalent amount in USD, or null if conversion fails
+     */
+    BigDecimal convertZarToUsd(BigDecimal zarAmount) {
+        try {
+            // Get current exchange rate
+            BigDecimal exchangeRate = getZarToUsdRate()
+            
+            if (exchangeRate) {
+                return (zarAmount * exchangeRate).setScale(2, BigDecimal.ROUND_HALF_UP)
+            }
+            
+            return null
+        } catch (Exception e) {
+            log.error("Error converting ZAR to USD: ${e.message}", e)
+            return null
+        }
+    }
+    
+    /**
+     * Get the current ZAR to USD exchange rate from Fixer.io
+     * 
+     * @return The exchange rate (ZAR per 1 USD), or null if request fails
+     */
+    private BigDecimal getZarToUsdRate() {
+        try {
+            String url = "${FIXER_BASE_URL}/latest?access_key=${getFixerApiKey()}&symbols=ZAR,USD"
+            String response = new URL(url).text
+
+            def jsonResponse = new JsonSlurper().parseText(response)
+
+            if (jsonResponse.success) {
+                def eurToZar = jsonResponse.rates.ZAR
+                def eurToUsd = jsonResponse.rates.USD
+                if (eurToZar && eurToUsd) {
+                    // ZAR to USD = (EUR to USD) / (EUR to ZAR)
+                    return (eurToUsd / eurToZar).setScale(4, BigDecimal.ROUND_HALF_UP)
+                }
+            } else {
+                log.error("Fixer.io API error: ${jsonResponse.error?.toString() ?: "Unknown error"}")
+                return null
+            }
+        } catch (Exception e) {
+            log.error("Error fetching exchange rate: ${e.message}", e)
+            return null
+        }
+    }
+
+    /**
+     * Get the Fixer API key from configuration or environment variable
+     * 
+     * @return The Fixer API key
+     */
+    private String getFixerApiKey() {
+        return grailsApplication.config.getProperty('fixer.apiKey', String) ?: System.getenv('FIXER_API_KEY')
     }
 }
