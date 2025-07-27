@@ -11,6 +11,7 @@ class ExpenseController {
 
     ExpenseService expenseService
     CurrencyConversionService currencyConversionService
+    ExportTransactionsService exportTransactionsService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -148,4 +149,27 @@ class ExpenseController {
             }
         }
     }
+
+    /**
+     * Export expenses to CSV format.
+     */
+     def exportCsv() {
+        def user = User.get(session.userId)
+        def expenses = Expense.findAllByUser(user, [sort: 'date', order: 'asc'])
+
+        // Process expenses to add running balance and USD conversion
+        if (expenses) {
+            processExpenseList(expenses, user)
+        }
+
+        // Reverse for display (newest first)
+        expenses = expenses.reverse()
+
+        // Generate CSV from expenses
+        String csv = exportTransactionsService.exportExpensesToCsv(expenses)
+        response.contentType = 'text/csv'
+        response.setHeader("Content-Disposition", "attachment; filename=\"expenses.csv\"")
+        response.outputStream << csv
+        response.outputStream.flush()
+     }
 }

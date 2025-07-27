@@ -14,6 +14,13 @@
                     <ul>
                         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
                         <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                        <g:if test="${expenseList}">
+                            <li>
+                                <g:link action="exportCsv">
+                                    <i class="bi bi-file-earmark-arrow-down"></i> Export to CSV
+                                </g:link>
+                            </li>
+                        </g:if>
                     </ul>
                 </div>
             </section>
@@ -32,8 +39,8 @@
                     <g:else>
                         <f:table 
                             collection="${expenseList}" 
-                            properties="['description', 'amount', 'date', 'runningBalance', 'usdAmount']" 
-                            labels="['Description', 'Amount (ZAR)', 'Date', 'Running Balance (ZAR)', 'Amount (USD)']"
+                            properties="['description', 'amount', 'usdAmount', 'date', 'runningBalance']" 
+                            labels="['Description', 'Amount (ZAR)', 'Amount (USD)', 'Date', 'Running Balance (ZAR)']"
                         />
                     </g:else>
 
