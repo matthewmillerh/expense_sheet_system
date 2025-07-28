@@ -64,6 +64,8 @@ export FIXER_API_KEY=your_fixer_api_key_here
 
 ### 3. Run the Application
 
+Ensure that it is run in the same terminal window that the FIXER_API_KEY was set in.
+
 ```bash
 # On Windows
 .\gradlew.bat bootRun
@@ -85,17 +87,7 @@ The application will start on `http://localhost:8080`
 
 ## Testing
 
-### Run All Tests
-
-```bash
-# On Windows
-.\gradlew.bat test
-
-# On Linux/macOS
-./gradlew test
-```
-
-### Run Specific Test Class
+### Run CurrencyConversionService Test Class
 
 ```bash
 # On Windows
