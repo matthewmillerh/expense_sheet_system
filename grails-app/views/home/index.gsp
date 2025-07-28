@@ -77,7 +77,7 @@
                         <g:link controller="expense" action="index" class="text-white"><button class="btn btn-secondary text-white">View Expenses</button></g:link>
                     </li>
                     <li class="controller list-inline-item mb-2 mx-2">
-                        <g:link controller="user" action="index" class="text-white"><button class="btn btn-secondary text-white">View Account</button></g:link>
+                        <g:link controller="user" action="show" id="${session.userId}" class="text-white"><button class="btn btn-secondary text-white">View Account</button></g:link>
                     </li>
                     <li class="controller list-inline-item mb-2 mx-2">
                         <g:link controller="login" action="logout" class="text-white"><button class="btn btn-secondary text-white">Log Out</button></g:link>

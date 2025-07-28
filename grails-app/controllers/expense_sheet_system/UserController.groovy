@@ -18,18 +18,8 @@ class UserController {
      * This is to ensure that users can only see their own information.
      */
     def index(Integer max) {
-        // Ensure the user is logged in
-        def currentUserId = session.userId
-        if (!currentUserId) {
-            redirect(controller: 'login', action: 'index')
-            return
-        }
-        
-        // Retrieve the current user and prepare a list for display
-        def currentUser = User.get(currentUserId)
-        def userList = currentUser ? [currentUser] : []
-        
-        respond userList, model:[userCount: userList.size()]
+        // Prevent access to /user/index
+        render(view: '/notFound', status: 404)
     }
 
     def show(Long id) {
@@ -63,7 +53,8 @@ class UserController {
     }
 
     def edit(Long id) {
-        respond userService.get(id)
+        // Prevent access to /user/edit
+        render(view: '/notFound', status: 404)
     }
 
     def update(User user) {

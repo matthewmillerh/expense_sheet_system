@@ -33,12 +33,20 @@
                     </g:hasErrors>
                     <g:form resource="${this.user}" method="PUT">
                         <g:hiddenField name="version" value="${this.user?.version}" />
-                        <fieldset class="form">
-                            <f:all bean="user"/>
-                        </fieldset>
-                        <fieldset class="buttons">
+                            <%-- Custom form to make user details read only --%>
+                            <fieldset class="form">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <g:textField name="name" value="${user?.name}" class="form-control" readonly="true"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="startingBalance">Starting Balance</label>
+                                    <g:textField name="startingBalance" value="${user?.startingBalance}" class="form-control" readonly="true"/>
+                                </div>
+                            </fieldset>
+                        <%-- <fieldset class="buttons">
                             <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                        </fieldset>
+                        </fieldset> --%>
                     </g:form>
                 </div>
             </section>
