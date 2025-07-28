@@ -4,6 +4,14 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'expense.label', default: 'Expense')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <style>
+            .expense-table th, .expense-table td {
+                font-size: 1rem !important;
+            }
+            .expense-table th {
+                font-weight: 600 !important;
+            }
+        </style>
     </head>
     <body>
     <div id="content" role="main">
@@ -37,17 +45,30 @@
                         </div>
                     </g:if>
                     <g:else>
-                        <f:table 
-                            collection="${expenseList}" 
-                            properties="['description', 'amount', 'usdAmount', 'date', 'runningBalance']" 
-                            labels="[
-                                description: 'Description',
-                                amount: 'Amount (ZAR)',
-                                usdAmount: 'Amount (USD)',
-                                date: 'Date',
-                                runningBalance: 'Running Balance (ZAR)'
-                            ]"
-                        />
+                    <div class="table-responsive">
+                        <table class="table table-sm expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount (ZAR)</th>
+                                    <th>Amount (USD)</th>
+                                    <th>Date</th>
+                                    <th>Running Balance (ZAR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <g:each in="${expenseList}" var="expense">
+                                    <tr>
+                                        <td>${expense.description}</td>
+                                        <td>${expense.amount}</td>
+                                        <td>${expense.usdAmount}</td>
+                                        <td><g:formatDate date="${expense.date}" format="dd-MM-yyyy"/></td>
+                                        <td>${expense.runningBalance}</td>
+                                    </tr>
+                                </g:each>
+                            </tbody>
+                        </table>
+                    </div>
                     </g:else>
 
                     <g:if test="${expenseCount > params.int('max')}">

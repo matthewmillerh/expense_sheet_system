@@ -22,7 +22,7 @@ class ExportTransactionsService {
         }
 
         def writer = new StringWriter()
-        def dateFormat = new SimpleDateFormat("yyyy-MM-dd")
+        def dateFormat = new SimpleDateFormat("dd-MM-yyyy")
         
         // Write CSV header
         writer << "Description,Amount (ZAR),Amount (USD),Date,Running Balance (ZAR)\n"
