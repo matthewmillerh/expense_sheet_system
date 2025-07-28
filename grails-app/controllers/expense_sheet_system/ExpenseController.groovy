@@ -51,6 +51,16 @@ class ExpenseController {
         def user = User.get(session.userId)
         expense.user = user
 
+        // Clear empty user error
+        expense.clearErrors()
+
+        // Prevent future dates
+        if (expense.date && expense.date > new Date()) {
+            expense.errors.rejectValue('date', 'expense.date.future', 'Date cannot be in the future.')
+            respond expense.errors, view:'create'
+            return
+        }
+
         try {
             expenseService.save(expense)
         } catch (ValidationException e) {
@@ -80,6 +90,13 @@ class ExpenseController {
         // Always set the user to the logged-in user
         def user = User.get(session.userId)
         expense.user = user
+
+        // Prevent future dates
+        if (expense.date && expense.date > new Date()) {
+            expense.errors.rejectValue('date', 'expense.date.future', 'Date cannot be in the future.')
+            respond expense.errors, view:'edit'
+            return
+        }
 
         try {
             expenseService.save(expense)
