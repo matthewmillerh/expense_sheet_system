@@ -148,6 +148,7 @@ To persist data between restarts, update your application.yml to use a file-base
 Optimisation considerations at 10k concurrent users:
 
 - Using a more robust database like PostgreSQL or MySQL instead of H2 for production.
+- Ensure proper database connection pool sizing.
 - Making sure the most common database queries are efficient (for example, by adding indexes where needed).
 - Running more than one instance of the app behind a load balancer if needed.
 - Caching exchange rates to reduce the number of external API calls (already implemented).
