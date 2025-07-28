@@ -24,7 +24,26 @@
                     <g:if test="${flash.message}">
                     <div class="message" role="status">${flash.message}</div>
                     </g:if>
-                    <f:display bean="expense" except="user"/>
+                    <%-- Custom table display --%>
+                    <div class="table-responsive">
+                        <table class="table table-sm expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount (ZAR)</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${expense.description}</td>
+                                    <td>${expense.amount}</td>
+                                    <td><g:formatDate date="${expense.date}" format="dd-MM-yyyy"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
                     <g:form resource="${this.expense}" method="DELETE">
                         <fieldset class="buttons">
                             <g:link class="edit" action="edit" resource="${this.expense}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

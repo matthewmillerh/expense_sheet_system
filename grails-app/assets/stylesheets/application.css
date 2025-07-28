@@ -13,3 +13,13 @@
 *= require mobile
 *= require_self
 */
+.expense-table th,
+.expense-table td {
+  font-size: 1rem !important;
+}
+.expense-table th {
+  font-weight: 600 !important;
+}
+.table-responsive {
+  overflow-x: auto;
+}

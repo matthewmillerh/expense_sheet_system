@@ -4,14 +4,6 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'expense.label', default: 'Expense')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <style>
-            .expense-table th, .expense-table td {
-                font-size: 1rem !important;
-            }
-            .expense-table th {
-                font-weight: 600 !important;
-            }
-        </style>
     </head>
     <body>
     <div id="content" role="main">
@@ -45,6 +37,7 @@
                         </div>
                     </g:if>
                     <g:else>
+                    <%-- Custom table display --%>
                     <div class="table-responsive">
                         <table class="table table-sm expense-table">
                             <thead>
@@ -59,7 +52,9 @@
                             <tbody>
                                 <g:each in="${expenseList}" var="expense">
                                     <tr>
-                                        <td>${expense.description}</td>
+                                        <td>
+                                            <g:link controller="expense" action="edit" id="${expense.id}">${expense.description}</g:link>
+                                        </td>
                                         <td>${expense.amount}</td>
                                         <td>${expense.usdAmount}</td>
                                         <td><g:formatDate date="${expense.date}" format="dd-MM-yyyy"/></td>
