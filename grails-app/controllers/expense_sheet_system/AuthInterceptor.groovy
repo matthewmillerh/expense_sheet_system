@@ -20,6 +20,13 @@ class AuthInterceptor {
             redirect(controller: "login", action: "index")
             return false
         }
+
+        // If the user does not have a starting balance, redirect to setupBalance
+        def user = User.get(session.userId)
+        if (user && (user.startingBalance == null || user.startingBalance <= 0.00G)) {
+            redirect(controller: "login", action: "setupBalance")
+            return false
+        }
         return true
     }
 
