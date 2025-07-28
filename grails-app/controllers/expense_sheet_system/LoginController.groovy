@@ -15,7 +15,7 @@ class LoginController {
 
     /**
      * Process user login/registration
-     * Creates new user if doesn't exist, then redirects to balance setup or expense page
+     * Creates new user if doesn't exist, then redirects to balance setup or home page
      */
     @Transactional
     def login() {
@@ -64,7 +64,7 @@ class LoginController {
     }
 
     /**
-     * Save the user's starting balance and proceed to expense tracking
+     * Save the user's starting balance and proceed to home page
      */
     @Transactional
     def saveBalance() {
