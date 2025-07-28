@@ -162,16 +162,12 @@ class ExpenseController {
         BigDecimal currentBalance = user.startingBalance ?: 0.00G
         expenses.each { expense ->
             currentBalance -= expense.amount
-            expense.runningBalance = currentBalance
-        }
 
-        // Add the USD conversion for each expense
-        expenses.each { expense ->
-            if (expense.amount) {
-                expense.usdAmount = convertZarToUsd(expense.amount)
-            } else {
-                expense.usdAmount = null
-            }
+            // Set running balance            
+            expense.runningBalance = currentBalance
+
+            // Convert amount to USD
+            expense.usdAmount = expense.amount ? convertZarToUsd(expense.amount) : null
         }
     }
 
